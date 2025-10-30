@@ -113,13 +113,26 @@ func _get_season_config(season_id: int) -> Dictionary:
 ## === Signal Handlers ===
 
 func _on_season_state_changed(new_state: SeasonManager.SeasonState) -> void:
-	print("Main: Season state -> %s" % SeasonManager.SeasonState.keys()[new_state])
+	var state_name = SeasonManager.SeasonState.keys()[new_state]
+	print("Main: Season state -> %s" % state_name)
 
 	match new_state:
-		SeasonManager.SeasonState.HAND_1_DRAFTING:
-			_start_drafting(1)
-		SeasonManager.SeasonState.HAND_2_DRAFTING:
-			_start_drafting(2)
+		SeasonManager.SeasonState.DRAFT_STACK:
+			hud.update_status("SELECT A DRAFT STACK (3 plants)", Color.YELLOW)
+		SeasonManager.SeasonState.HAND_1_DRAFTING, SeasonManager.SeasonState.HAND_2_DRAFTING:
+			_start_drafting(new_state)
+		SeasonManager.SeasonState.HAND_1_PLACING:
+			hud.update_status("HAND 1: Click to place plants (3 remaining)", Color.GREEN)
+		SeasonManager.SeasonState.HAND_2_PLACING:
+			hud.update_status("HAND 2: Click to place plants (3 remaining)", Color.GREEN)
+		SeasonManager.SeasonState.MINI_BLOOM:
+			hud.update_status("MINI BLOOM...", Color.CYAN)
+		SeasonManager.SeasonState.FULL_BLOOM:
+			hud.update_status("FULL BLOOM...", Color.ORANGE)
+		SeasonManager.SeasonState.GATE_CHECK:
+			hud.update_status("GATE CHECK...", Color.MAGENTA)
+		SeasonManager.SeasonState.SEASON_END:
+			hud.update_status("SEASON END", Color.RED)
 
 func _on_season_completed(passed: bool, score: int) -> void:
 	print("\n=== Season %d Completed ===" % current_season)
@@ -137,6 +150,7 @@ func _on_season_completed(passed: bool, score: int) -> void:
 		print("=== GAME OVER ===")
 
 func _on_draft_stack_ready(stacks: Array) -> void:
+	print("Main: Received draft_stack_ready with %d stacks" % stacks.size())
 	hud.show_draft_stacks(stacks)
 
 func _on_draft_stack_selected(stack_index: int) -> void:
@@ -152,6 +166,12 @@ func _on_plant_placed(_plant: Plant, pos: Vector2i) -> void:
 	print("Main: Plant placed at %s" % pos)
 	season_manager.place_plant_in_hand()
 
+	# อัพเดทจำนวนพืชที่เหลือ
+	var remaining = season_manager.plants_per_hand - season_manager.plants_placed_this_hand
+	if remaining > 0:
+		var hand_text = "HAND %d" % season_manager.current_hand
+		hud.update_status("%s: Click to place plants (%d remaining)" % [hand_text, remaining], Color.GREEN)
+
 	# รีเซ็ต overgrow สำหรับการวางครั้งถัดไป
 	hud.reset_overgrow()
 
@@ -160,8 +180,10 @@ func _on_plant_placed(_plant: Plant, pos: Vector2i) -> void:
 
 ## === Drafting ===
 
-func _start_drafting(hand_number: int) -> void:
+func _start_drafting(state: SeasonManager.SeasonState) -> void:
+	var hand_number = 1 if state == SeasonManager.SeasonState.HAND_1_DRAFTING else 2
 	print("Main: Drafting for hand %d" % hand_number)
+	hud.update_status("DRAFTING: Select plants (TODO)", Color.CYAN)
 	# TODO: แสดง UI สำหรับดราฟท์พืช (3->1)
 	# ตอนนี้ให้เริ่ม placing ทันที
 	season_manager.start_hand(hand_number)

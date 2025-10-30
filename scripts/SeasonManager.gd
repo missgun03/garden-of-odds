@@ -83,7 +83,9 @@ func _generate_draft_stacks() -> void:
 			})
 		available_stacks.append(stack)
 
+	print("SeasonManager: Generated %d draft stacks" % available_stacks.size())
 	emit_signal("draft_stack_ready", available_stacks)
+	print("SeasonManager: Emitted draft_stack_ready signal")
 
 ## เลือก draft stack
 func select_draft_stack(stack_index: int) -> void:

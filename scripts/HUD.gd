@@ -22,6 +22,7 @@ var target_label: Label
 var coins_label: Label
 var entropy_bar: ProgressBar
 var entropy_label: Label
+var status_label: Label  # แสดงสถานะเกม
 
 var overgrow_button: Button
 var stabilize_button: Button
@@ -71,6 +72,13 @@ func _setup_ui() -> void:
 	coins_label.add_theme_font_size_override("font_size", 20)
 	top_panel.add_child(coins_label)
 
+	# === Status Label ===
+	status_label = Label.new()
+	status_label.text = "Waiting..."
+	status_label.add_theme_font_size_override("font_size", 24)
+	status_label.add_theme_color_override("font_color", Color.YELLOW)
+	vbox.add_child(status_label)
+
 	# === Entropy Bar ===
 	var entropy_panel = VBoxContainer.new()
 	entropy_panel.add_theme_constant_override("separation", 5)
@@ -107,10 +115,18 @@ func _setup_ui() -> void:
 	levers_panel.add_child(stabilize_button)
 
 	# === Draft Stack Container ===
+	var draft_section = VBoxContainer.new()
+	vbox.add_child(draft_section)
+
+	var draft_label = Label.new()
+	draft_label.text = "Select Draft Stack:"
+	draft_label.add_theme_font_size_override("font_size", 18)
+	draft_section.add_child(draft_label)
+
 	draft_container = HBoxContainer.new()
 	draft_container.add_theme_constant_override("separation", 10)
 	draft_container.visible = false
-	vbox.add_child(draft_container)
+	draft_section.add_child(draft_container)
 
 	# Spacer
 	var spacer = Control.new()
@@ -148,6 +164,8 @@ func _get_entropy_level(entropy: float) -> String:
 
 ## แสดง draft stacks
 func show_draft_stacks(stacks: Array) -> void:
+	print("HUD: show_draft_stacks called with %d stacks" % stacks.size())
+
 	# ล้าง draft buttons เก่า
 	for btn in draft_buttons:
 		btn.queue_free()
@@ -162,8 +180,10 @@ func show_draft_stacks(stacks: Array) -> void:
 		btn.pressed.connect(_on_draft_stack_selected.bind(i))
 		draft_container.add_child(btn)
 		draft_buttons.append(btn)
+		print("HUD: Created button %d" % i)
 
 	draft_container.visible = true
+	print("HUD: Draft container is now visible")
 
 func _format_stack(stack: Array) -> String:
 	var names = []
@@ -174,6 +194,13 @@ func _format_stack(stack: Array) -> String:
 ## ซ่อน draft stacks
 func hide_draft_stacks() -> void:
 	draft_container.visible = false
+
+## อัพเดทสถานะเกม
+func update_status(message: String, color: Color = Color.WHITE) -> void:
+	if status_label:
+		status_label.text = message
+		status_label.add_theme_color_override("font_color", color)
+		print("HUD: Status updated - %s" % message)
 
 ## Overgrow pressed
 func _on_overgrow_pressed() -> void:
