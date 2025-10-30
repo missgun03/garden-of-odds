@@ -143,7 +143,7 @@ func _start_full_bloom() -> void:
 	_resolve_bloom(true)
 
 ## Resolve bloom: trigger plants และคำนวณคะแนน
-func _resolve_bloom(is_full_bloom: bool) -> void:
+func _resolve_bloom(_is_full_bloom: bool) -> void:
 	if not board or not resolver:
 		push_error("Board or Resolver not set")
 		return

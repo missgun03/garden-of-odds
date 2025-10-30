@@ -35,8 +35,8 @@ func _setup_grid_visuals() -> void:
 ## แปลง grid position -> world position
 func _grid_to_world(grid_pos: Vector2i) -> Vector2:
 	return Vector2(
-		grid_pos.x * cell_size + cell_size / 2,
-		grid_pos.y * cell_size + cell_size / 2
+		grid_pos.x * cell_size + cell_size / 2.0,
+		grid_pos.y * cell_size + cell_size / 2.0
 	)
 
 ## แปลง world position -> grid position
@@ -139,11 +139,11 @@ func get_orthogonal_neighbors(pos: Vector2i) -> Array:
 	return neighbors
 
 ## แสดง placeholder (highlight ตำแหน่งที่จะวาง)
-func show_placeholder(pos: Vector2i, show: bool = true) -> void:
+func show_placeholder(pos: Vector2i, is_visible: bool = true) -> void:
 	if not placeholders.has(pos):
 		return
 
-	if show and is_position_empty(pos):
+	if is_visible and is_position_empty(pos):
 		placeholders[pos].color = Color(0.5, 0.8, 0.5, 0.6)  # เขียวสว่าง
 	else:
 		# รีเซ็ตกลับเป็นสีปกติ

@@ -148,7 +148,7 @@ func _on_overgrow_pressed() -> void:
 func _on_stabilize_pressed() -> void:
 	print("Main: Stabilize used")
 
-func _on_plant_placed(plant: Plant, pos: Vector2i) -> void:
+func _on_plant_placed(_plant: Plant, pos: Vector2i) -> void:
 	print("Main: Plant placed at %s" % pos)
 	season_manager.place_plant_in_hand()
 
@@ -195,7 +195,9 @@ func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 	plant.l_min = 1.0
 	plant.l_max = 2.2
 	plant.entropy_on_event = 0.3
-	plant.tags = ["light", "buff", "engine"]
+	# สร้าง typed array สำหรับ tags
+	var plant_tags: Array[String] = ["light", "buff", "engine"]
+	plant.tags = plant_tags
 
 	# วางพืช
 	board.place_plant(plant, grid_pos)

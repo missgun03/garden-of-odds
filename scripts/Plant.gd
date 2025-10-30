@@ -57,7 +57,7 @@ func _get_role_color() -> Color:
 
 ## คำนวณ L จาก context (override ในแต่ละพืชเพื่อใส่ logic เฉพาะ)
 ## ctx = {neighbors: Array[Plant], board_state: Dictionary, ...}
-func calculate_L(ctx: Dictionary) -> float:
+func calculate_L(_ctx: Dictionary) -> float:
 	# Base implementation: คืน l_min (override ในแต่ละพืชเพื่อใส่ logic)
 	return l_min
 
