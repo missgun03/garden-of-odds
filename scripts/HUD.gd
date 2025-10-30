@@ -125,8 +125,14 @@ func _setup_ui() -> void:
 
 	draft_container = HBoxContainer.new()
 	draft_container.add_theme_constant_override("separation", 10)
-	draft_container.visible = false
 	draft_section.add_child(draft_container)
+
+	# เพิ่ม debug label
+	var debug_label = Label.new()
+	debug_label.text = "(Waiting for draft stacks...)"
+	debug_label.add_theme_font_size_override("font_size", 12)
+	debug_label.add_theme_color_override("font_color", Color.GRAY)
+	draft_container.add_child(debug_label)
 
 	# Spacer
 	var spacer = Control.new()
@@ -166,9 +172,9 @@ func _get_entropy_level(entropy: float) -> String:
 func show_draft_stacks(stacks: Array) -> void:
 	print("HUD: show_draft_stacks called with %d stacks" % stacks.size())
 
-	# ล้าง draft buttons เก่า
-	for btn in draft_buttons:
-		btn.queue_free()
+	# ล้างทุกอย่างใน draft_container (รวม debug label)
+	for child in draft_container.get_children():
+		child.queue_free()
 	draft_buttons.clear()
 
 	# สร้าง button สำหรับแต่ละ stack
@@ -182,8 +188,7 @@ func show_draft_stacks(stacks: Array) -> void:
 		draft_buttons.append(btn)
 		print("HUD: Created button %d" % i)
 
-	draft_container.visible = true
-	print("HUD: Draft container is now visible")
+	print("HUD: Draft buttons should be visible now (count: %d)" % draft_container.get_child_count())
 
 func _format_stack(stack: Array) -> String:
 	var names = []

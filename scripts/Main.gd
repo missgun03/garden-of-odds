@@ -16,6 +16,8 @@ var stages_data: Dictionary = {}
 var selected_plant_to_place: Dictionary = {}
 
 func _ready() -> void:
+	print("Main: _ready() started")
+
 	# โหลด stages data
 	_load_stages_data()
 
@@ -24,6 +26,8 @@ func _ready() -> void:
 
 	# เชื่อม signals
 	_connect_signals()
+
+	print("Main: All setup complete, starting game...")
 
 	# เริ่มเกม
 	_start_game()
@@ -66,18 +70,23 @@ func _connect_references() -> void:
 
 ## เชื่อม signals
 func _connect_signals() -> void:
+	print("Main: Connecting signals...")
+
 	# SeasonManager signals
 	season_manager.state_changed.connect(_on_season_state_changed)
 	season_manager.season_completed.connect(_on_season_completed)
 	season_manager.draft_stack_ready.connect(_on_draft_stack_ready)
+	print("Main: SeasonManager signals connected")
 
 	# HUD signals
 	hud.overgrow_pressed.connect(_on_overgrow_pressed)
 	hud.stabilize_pressed.connect(_on_stabilize_pressed)
 	hud.draft_stack_selected.connect(_on_draft_stack_selected)
+	print("Main: HUD signals connected")
 
 	# Board signals
 	board.plant_placed.connect(_on_plant_placed)
+	print("Main: Board signals connected")
 
 ## เริ่มเกม
 func _start_game() -> void:
