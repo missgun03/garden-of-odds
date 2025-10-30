@@ -39,9 +39,10 @@ func _ready() -> void:
 
 ## สร้าง UI
 func _setup_ui() -> void:
-	# Main layout
+	# Main layout - ด้านซ้าย (ไม่ใช้ full screen)
 	var margin = MarginContainer.new()
-	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	margin.size = Vector2(450, 720)  # ความกว้าง 450px
 	margin.add_theme_constant_override("margin_left", 10)
 	margin.add_theme_constant_override("margin_top", 10)
 	margin.add_theme_constant_override("margin_right", 10)
