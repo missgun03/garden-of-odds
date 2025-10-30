@@ -196,8 +196,13 @@ func _on_stabilize_pressed() -> void:
 		push_warning("Not enough coins for Stabilize")
 		return
 
-	if not resolver or not season_manager:
-		push_error("Resolver or SeasonManager not set")
+	# ตรวจสอบว่า references พร้อมหรือไม่
+	if not resolver:
+		push_warning("Resolver not ready yet")
+		return
+
+	if not season_manager:
+		push_warning("SeasonManager not ready yet")
 		return
 
 	# ใช้ Stabilize
@@ -208,6 +213,9 @@ func _on_stabilize_pressed() -> void:
 		stabilize_used_this_season = true
 		stabilize_button.disabled = true
 		print("HUD: Stabilize used! Entropy reduced by %.1f" % result.reduction)
+
+		# Emit signal เพื่อแจ้ง Main
+		emit_signal("stabilize_pressed")
 
 		# อัพเดท UI
 		update_display(season_manager.season_score, season_manager.target_score, season_manager.current_entropy)
