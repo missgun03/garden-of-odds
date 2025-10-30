@@ -41,10 +41,11 @@ func _grid_to_world(grid_pos: Vector2i) -> Vector2:
 
 ## แปลง world position -> grid position
 func _world_to_grid(world_pos: Vector2) -> Vector2i:
-	return Vector2i(
-		int(world_pos.x / cell_size),
-		int(world_pos.y / cell_size)
-	)
+	# world position เป็น local position ของ board (relative to board origin)
+	# แปลงเป็น grid index โดยหารด้วย cell_size
+	var grid_x = int(world_pos.x / cell_size)
+	var grid_y = int(world_pos.y / cell_size)
+	return Vector2i(grid_x, grid_y)
 
 ## ตรวจสอบว่าตำแหน่งถูกต้องหรือไม่
 func is_position_valid(pos: Vector2i) -> bool:

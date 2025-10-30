@@ -10,7 +10,7 @@
 script = ExtResource("1")
 
 [node name="Board" type="Node2D" parent="."]
-position = Vector2(500, 100)
+position = Vector2(500, 200)
 script = ExtResource("2")
 grid_size = 5
 cell_size = 64

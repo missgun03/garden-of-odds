@@ -200,16 +200,43 @@ func _start_drafting(state: SeasonManager.SeasonState) -> void:
 ## === Input Handling (สำหรับ testing) ===
 
 func _input(event: InputEvent) -> void:
+	# แสดง placeholder เมื่อ mouse เคลื่อนไหว
+	if event is InputEventMouseMotion:
+		if season_manager.current_state == SeasonManager.SeasonState.HAND_1_PLACING or \
+		   season_manager.current_state == SeasonManager.SeasonState.HAND_2_PLACING:
+			_show_placement_preview(event.position)
+
+	# วางพืชเมื่อคลิก
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if season_manager.current_state == SeasonManager.SeasonState.HAND_1_PLACING or \
 		   season_manager.current_state == SeasonManager.SeasonState.HAND_2_PLACING:
 			_try_place_plant_at_mouse(event.position)
 
+## แสดง preview ก่อนวาง
+func _show_placement_preview(mouse_pos: Vector2) -> void:
+	var global_mouse = mouse_pos
+	var board_local_pos = board.to_local(global_mouse)
+	var grid_pos = board._world_to_grid(board_local_pos)
+
+	# ซ่อน placeholder เก่า (TODO: optimize นี้)
+	for x in range(board.grid_size):
+		for y in range(board.grid_size):
+			board.show_placeholder(Vector2i(x, y), false)
+
+	# แสดง placeholder ใหม่
+	if board.is_position_valid(grid_pos) and board.is_position_empty(grid_pos):
+		board.show_placeholder(grid_pos, true)
+
 ## วางพืชที่ตำแหน่ง mouse (สำหรับ testing)
 func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
-	# แปลง mouse position -> board position
-	var board_local_pos = board.to_local(mouse_pos)
+	# แปลง screen mouse position -> board local position
+	# mouse_pos จาก event.position เป็น viewport position
+	# ต้องแปลงเป็น global position ก่อน แล้วค่อยแปลงเป็น local ของ board
+	var global_mouse = mouse_pos  # ใน 2D game viewport = global
+	var board_local_pos = board.to_local(global_mouse)
 	var grid_pos = board._world_to_grid(board_local_pos)
+
+	print("Mouse: %s -> Board local: %s -> Grid: %s" % [mouse_pos, board_local_pos, grid_pos])
 
 	if not board.is_position_valid(grid_pos):
 		return
