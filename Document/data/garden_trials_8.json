@@ -1,0 +1,87 @@
+[
+  {
+    "id": "trial_no_nectar",
+    "name": "Dry Season",
+    "rule": "Nectar/Heal events are disabled this season.",
+    "duration": "1_season",
+    "rewards": {
+      "coins": 8,
+      "rarity_boost": 0.05
+    },
+    "notes": "Counters bee/honey builds; high tension."
+  },
+  {
+    "id": "trial_reflective_fog",
+    "name": "Reflective Fog",
+    "rule": "20% of local multipliers invert (×0.5 instead of ×2) on trigger.",
+    "duration": "1_season",
+    "rewards": {
+      "global_multiplier": 1.1
+    },
+    "notes": "Theme: Thinker’s Fog mini-boss."
+  },
+  {
+    "id": "trial_overheat",
+    "name": "Overheat",
+    "rule": "Explosions add +2 extra Entropy but add +0.2 ChainLen instantly.",
+    "duration": "1_season",
+    "rewards": {
+      "coins": 6,
+      "entropy_relief": 0.15
+    },
+    "notes": "Push-burst seasons."
+  },
+  {
+    "id": "trial_sparse_soil",
+    "name": "Sparse Soil",
+    "rule": "Empty tiles reduce adjacent L by −0.2 (min 1.0).",
+    "duration": "1_season",
+    "rewards": {
+      "coins": 5,
+      "shop_discount": 0.15
+    },
+    "notes": "Encourages dense clusters."
+  },
+  {
+    "id": "trial_storm_pulse",
+    "name": "Storm Pulse",
+    "rule": "At start of Bloom, strike 3 random plants: reset stacks but grant +2 power.",
+    "duration": "1_season",
+    "rewards": {
+      "global_multiplier": 1.05,
+      "rarity_boost": 0.05
+    },
+    "notes": "High variance; pairs with Echo Fern."
+  },
+  {
+    "id": "trial_silent_bloom",
+    "name": "Silent Bloom",
+    "rule": "No sound/FX feedback but +10% score this season.",
+    "duration": "1_season",
+    "rewards": {
+      "global_multiplier": 1.1
+    },
+    "notes": "Fun/quirky modifier; keep short."
+  },
+  {
+    "id": "trial_mirror_grid",
+    "name": "Mirror Grid",
+    "rule": "Mirrored positions trigger after their counterparts (free +1 ChainLen per pair).",
+    "duration": "1_season",
+    "rewards": {
+      "coins": 7
+    },
+    "notes": "Supports Mirror Rain builds."
+  },
+  {
+    "id": "trial_brittle_vines",
+    "name": "Brittle Vines",
+    "rule": "Creepvine/Sporeling have 25% chance to wither on trigger (count as death).",
+    "duration": "1_season",
+    "rewards": {
+      "global_multiplier": 1.08,
+      "coins": 4
+    },
+    "notes": "Feeds Rotpetal/Death Feeds Life."
+  }
+]

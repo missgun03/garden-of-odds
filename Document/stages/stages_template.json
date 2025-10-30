@@ -1,0 +1,41 @@
+{
+  "difficulty": "Grove",
+  "seasons": [
+    {
+      "id": 1,
+      "target": 80,
+      "trial": null,
+      "contracts": 2
+    },
+    {
+      "id": 2,
+      "target": 140,
+      "trial": "random",
+      "contracts": 2
+    },
+    {
+      "id": 3,
+      "target": 220,
+      "trial": "boss_gate",
+      "contracts": 1
+    },
+    {
+      "id": 4,
+      "target": 340,
+      "trial": "random",
+      "contracts": 2
+    },
+    {
+      "id": 5,
+      "target": 520,
+      "trial": null,
+      "contracts": 2
+    },
+    {
+      "id": 6,
+      "target": 800,
+      "trial": "finale",
+      "contracts": 1
+    }
+  ]
+}

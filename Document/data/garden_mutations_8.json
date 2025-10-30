@@ -1,0 +1,143 @@
+[
+  {
+    "id": "mut_bees_explosions",
+    "name": "Bees Are Explosions",
+    "rarity": "rare",
+    "effects": [
+      {
+        "when": "nectar_event",
+        "modify": "local_multiplier",
+        "op": "mul",
+        "value": 1.5
+      },
+      {
+        "when": "nectar_event",
+        "modify": "entropy",
+        "op": "add",
+        "value": 0.5
+      }
+    ],
+    "global_mods": [],
+    "notes": "Bee/Honeyroot builds spike harder; pairs with Candy Wastes biome."
+  },
+  {
+    "id": "mut_hive_mind",
+    "name": "Hive Mind",
+    "rarity": "uncommon",
+    "effects": [
+      {
+        "when": "set_count(kind=same_species)>=3",
+        "modify": "global_multiplier_set",
+        "op": "mul",
+        "value_per_extra": 1.1
+      }
+    ],
+    "global_mods": [],
+    "notes": "Mono-species payoff; encourages triples/quads."
+  },
+  {
+    "id": "mut_mirror_rain",
+    "name": "Mirror Rain",
+    "rarity": "rare",
+    "effects": [
+      {
+        "when": "any_growth",
+        "modify": "mirror_across_board",
+        "op": "trigger",
+        "value": 1
+      },
+      {
+        "when": "mirror",
+        "modify": "entropy",
+        "op": "add",
+        "value": 0.1,
+        "cap_per_phase": 0.9
+      }
+    ],
+    "global_mods": [],
+    "notes": "Doubles triggers along symmetry; soft-capped per phase."
+  },
+  {
+    "id": "mut_overcharge",
+    "name": "Overcharge",
+    "rarity": "uncommon",
+    "effects": [
+      {
+        "when": "chain_len>=4",
+        "modify": "all_plants_power",
+        "op": "add",
+        "value": 1
+      },
+      {
+        "when": "chain_len>=4",
+        "modify": "entropy",
+        "op": "add",
+        "value": 2
+      }
+    ],
+    "global_mods": [],
+    "notes": "Reward long chains with garden-wide spike; risky."
+  },
+  {
+    "id": "mut_death_feeds_life",
+    "name": "Death Feeds Life",
+    "rarity": "uncommon",
+    "effects": [
+      {
+        "when": "plant_death",
+        "modify": "nearest_ally_eventscore",
+        "op": "mul",
+        "value": 1.5
+      }
+    ],
+    "global_mods": [],
+    "notes": "Sacrifice loops; pairs with Rotpetal/Seedbomb."
+  },
+  {
+    "id": "mut_reverse_bloom",
+    "name": "Reverse Bloom",
+    "rarity": "common",
+    "effects": [
+      {
+        "when": "slow_growth_tag",
+        "modify": "eventscore",
+        "op": "mul",
+        "value": 1.3
+      }
+    ],
+    "global_mods": [],
+    "notes": "Rewards slow/one-shot plants; soft balancing lever."
+  },
+  {
+    "id": "mut_entropy_feast",
+    "name": "Entropy Feast",
+    "rarity": "rare",
+    "effects": [],
+    "global_mods": [
+      {
+        "modify": "entropy_multiplier_model",
+        "model": "aggressive",
+        "params": {
+          "delta": 0.02,
+          "softcap": 7.0
+        }
+      }
+    ],
+    "notes": "Turns risk into bigger global multiplier."
+  },
+  {
+    "id": "mut_echo_growth",
+    "name": "Echo of Growth",
+    "rarity": "epic",
+    "effects": [
+      {
+        "when": "any_growth",
+        "modify": "repeat_next_round",
+        "op": "trigger",
+        "value": 1
+      }
+    ],
+    "global_mods": [],
+    "notes": "Replays growth next round; can snowball chain length."
+  }
+]

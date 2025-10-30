@@ -1,0 +1,13 @@
+name,role,p_base,l_rule,l_min,l_max,entropy_on_event,tags,notes
+Sunbud,Energy,5, +0.2 per adjacent plant; +0.4 if neighbor is Seedbomb or Honeyroot,1.0,2.2,0.3,"light,buff,engine",Safe light engine / opener
+Sunspore,Energy,6, +0.3 per affected orthogonal neighbor (max 4); ×1.5 if tile is unblocked (full sun),1.0,2.8,0.3,"light,pulse,engine",Pulse buff; pairs with Seedbomb
+Lumileaf,Energy,7, ×2.0 if not blocked; +0.2 per empty orthogonal cell,1.0,2.6,0.4,"light,placement",Placement spike / edges
+Seedbomb,Burst,8, ×1.6 if buff stacks ≥2; +0.3 per affected cell on blast,1.0,3.2,1.0,"explode,burst",Signature burst on buff
+Beeplant,Support,5, ×1.4 if ≥2 Honeyroots adjacent; +0.3 per bee spawned,1.0,2.8,0.4,"bee,nectar",Pollination generator
+Honeyroot,Support,5, ×1.5 if adjacent to Beeplant; +0.2 per nectar used this season,1.0,2.6,0.3,"nectar,support",Nectar sink / sustain
+Siphonstem,Sap,5, +0.2 per point drained from neighbors; ×1.3 if adjacent to Regenerator,1.0,2.4,0.4,"drain,engine",Risk-reward drain
+Regenerator,Sap,5, +0.3 if refunded ≥2 power this round; ×1.4 if refund triggered,1.0,2.2,0.2,"support,refund",Pairs with Siphonstem/Creepvine
+Frostleaf,Control,5, ×1.4 if freeze prevents death; +0.2 per frozen this round,1.0,2.4,0.3,"freeze,control",Timing control / safety
+Sporeling,Spore,4, +0.2 per Sporeling on board (cap +1.0),1.0,2.0,0.4,"swarm,spread",Swarm that feeds entropy
+Rotpetal,Spore,6, +0.3 per rot stack from nearby deaths; ×1.6 at 5 stacks (detonate),1.0,3.0,0.8,"death,chain",Death-chain detonator
+Echo Fern,Meta,6, ×1.5 if repeating high-tier event; +0.2 per repeat chain,1.0,3.0,0.7,"repeat,meta",Repeater engine

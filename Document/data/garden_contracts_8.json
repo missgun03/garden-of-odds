@@ -1,0 +1,102 @@
+[
+  {
+    "id": "contract_fungus3",
+    "name": "Fungal Trio",
+    "condition": "End the season with ≥3 Spore/Fungus plants on board.",
+    "reward": {
+      "next_target_multiplier": 0.9
+    },
+    "fallback": {
+      "coins": 4
+    },
+    "notes": "Pushes fungus builds without locking score racing."
+  },
+  {
+    "id": "contract_chain6",
+    "name": "Chain Six",
+    "condition": "Achieve ChainLen ≥6 at least once this season.",
+    "reward": {
+      "mutation_slot_delta": 1
+    },
+    "fallback": {
+      "coins": 5
+    },
+    "notes": "Encourages explosive turns."
+  },
+  {
+    "id": "contract_bee_net",
+    "name": "Bee Network",
+    "condition": "Create 3+ Nectar events in one season.",
+    "reward": {
+      "coins": 8,
+      "rarity_boost": 0.05
+    },
+    "fallback": {
+      "coins": 5
+    },
+    "notes": "Supports bee/honey economy."
+  },
+  {
+    "id": "contract_orderly_grid",
+    "name": "Orderly Grid",
+    "condition": "End the season with no empty orthogonal adjacencies around center tile.",
+    "reward": {
+      "global_multiplier": 1.05,
+      "entropy_relief": 0.1
+    },
+    "fallback": {
+      "coins": 4
+    },
+    "notes": "Encourages dense, planned layouts."
+  },
+  {
+    "id": "contract_sacrifice",
+    "name": "Gentle Sacrifice",
+    "condition": "Have ≥2 plant deaths this season.",
+    "reward": {
+      "coins": 6,
+      "next_target_multiplier": 0.95
+    },
+    "fallback": {
+      "coins": 3
+    },
+    "notes": "Teaches death-loop value."
+  },
+  {
+    "id": "contract_mirror_pair",
+    "name": "Mirror Pair",
+    "condition": "Place two plants in exact mirrored positions this season.",
+    "reward": {
+      "global_multiplier": 1.06
+    },
+    "fallback": {
+      "coins": 4
+    },
+    "notes": "Works with Mirrorbud/Mirror Rain."
+  },
+  {
+    "id": "contract_low_entropy",
+    "name": "Composed Gardener",
+    "condition": "Finish the season with Entropy ≤ 30.",
+    "reward": {
+      "coins": 10
+    },
+    "fallback": {
+      "coins": 5
+    },
+    "notes": "Alternative to greed: play stable."
+  },
+  {
+    "id": "contract_overgrow_press",
+    "name": "Overgrow Press",
+    "condition": "Use Overgrow ≥2 times this season.",
+    "reward": {
+      "global_multiplier": 1.07,
+      "coins": 3
+    },
+    "fallback": {
+      "coins": 3
+    },
+    "notes": "Highlights Entropy Levers identity."
+  }
+]

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://caeuibeslnveq"
+
+[deps]
+
+files=["res://Document/data/garden_plants_12.role.translation", "res://Document/data/garden_plants_12.p.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.entropy.translation", "res://Document/data/garden_plants_12.tags.translation", "res://Document/data/garden_plants_12.notes.translation"]
+
+source_file="res://Document/data/garden_plants_12.csv"
+dest_files=["res://Document/data/garden_plants_12.role.translation", "res://Document/data/garden_plants_12.p.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.l.translation", "res://Document/data/garden_plants_12.entropy.translation", "res://Document/data/garden_plants_12.tags.translation", "res://Document/data/garden_plants_12.notes.translation"]
+
+[params]
+
+compress=true
+delimiter=0

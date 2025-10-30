@@ -1,0 +1,228 @@
+{
+  "version": "1.0",
+  "notes": "Stage targets and gates for all difficulties. Targets tuned for 6-season runs with Draft Stack + Entropy Levers + Mini-Bloom.",
+  "difficulties": [
+    {
+      "difficulty": "Sprout",
+      "description": "Easy / ชิล เริ่มรู้ระบบ",
+      "params": {
+        "E_cap": 120,
+        "entropy_model": {
+          "type": "pow",
+          "beta": 0.015,
+          "gamma": 0.7,
+          "softcap": 6.5
+        },
+        "mutation_start": 2,
+        "shop_price_mult": 0.85,
+        "reroll_per_season": 1
+      },
+      "seasons": [
+        {
+          "id": 1,
+          "target": 70,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 2,
+          "target": 120,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 3,
+          "target": 190,
+          "trial": "boss_gate",
+          "contracts": 1
+        },
+        {
+          "id": 4,
+          "target": 290,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 5,
+          "target": 440,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 6,
+          "target": 680,
+          "trial": "finale",
+          "contracts": 1
+        }
+      ]
+    },
+    {
+      "difficulty": "Grove",
+      "description": "Standard / ค่ากลาง",
+      "params": {
+        "E_cap": 100,
+        "entropy_model": {
+          "type": "pow",
+          "beta": 0.02,
+          "gamma": 0.8,
+          "softcap": 7.0
+        },
+        "mutation_start": 1,
+        "shop_price_mult": 1.0,
+        "reroll_per_season": 1
+      },
+      "seasons": [
+        {
+          "id": 1,
+          "target": 80,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 2,
+          "target": 140,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 3,
+          "target": 220,
+          "trial": "boss_gate",
+          "contracts": 1
+        },
+        {
+          "id": 4,
+          "target": 340,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 5,
+          "target": 520,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 6,
+          "target": 800,
+          "trial": "finale",
+          "contracts": 1
+        }
+      ]
+    },
+    {
+      "difficulty": "Wildwood",
+      "description": "Hard / ชอบเสี่ยง",
+      "params": {
+        "E_cap": 90,
+        "entropy_model": {
+          "type": "pow",
+          "beta": 0.025,
+          "gamma": 0.85,
+          "softcap": 7.0
+        },
+        "mutation_start": 1,
+        "shop_price_mult": 1.15,
+        "reroll_per_season": 0,
+        "weather_from_season": 1
+      },
+      "seasons": [
+        {
+          "id": 1,
+          "target": 90,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 2,
+          "target": 160,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 3,
+          "target": 250,
+          "trial": "boss_gate",
+          "contracts": 1
+        },
+        {
+          "id": 4,
+          "target": 380,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 5,
+          "target": 580,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 6,
+          "target": 900,
+          "trial": "finale",
+          "contracts": 1
+        }
+      ]
+    },
+    {
+      "difficulty": "Cataclysm",
+      "description": "Very Hard / นักล่า high score",
+      "params": {
+        "E_cap": 80,
+        "entropy_model": {
+          "type": "pow",
+          "beta": 0.03,
+          "gamma": 0.9,
+          "softcap": 8.0
+        },
+        "mutation_start": 0,
+        "shop_price_mult": 1.25,
+        "reroll_per_season": 0,
+        "mirror_cap_per_phase": 6,
+        "biomes": [
+          "Thinker’s Fog",
+          "Clockwreck Bay"
+        ]
+      },
+      "seasons": [
+        {
+          "id": 1,
+          "target": 100,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 2,
+          "target": 175,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 3,
+          "target": 275,
+          "trial": "boss_gate",
+          "contracts": 1
+        },
+        {
+          "id": 4,
+          "target": 420,
+          "trial": "random",
+          "contracts": 2
+        },
+        {
+          "id": 5,
+          "target": 640,
+          "trial": null,
+          "contracts": 2
+        },
+        {
+          "id": 6,
+          "target": 980,
+          "trial": "finale",
+          "contracts": 1
+        }
+      ]
+    }
+  ]
+}
