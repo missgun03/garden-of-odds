@@ -86,6 +86,11 @@ func place_plant(plant: Plant, pos: Vector2i) -> bool:
 		push_error("Board.place_plant: Position %s already occupied" % pos)
 		return false
 
+	# ตรวจสอบว่าพืชมี parent อยู่แล้วหรือไม่
+	if plant.get_parent() != null:
+		push_error("Board.place_plant: Plant %s already has a parent (already placed)" % plant.plant_name)
+		return false
+
 	# วางพืช
 	grid[pos] = plant
 	plant.grid_pos = pos

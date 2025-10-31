@@ -19,6 +19,7 @@ var plant_factory: PlantFactory = null
 var current_season: int = 1
 var stages_data: Dictionary = {}
 var selected_plant_to_place: Dictionary = {}
+var is_placing_plant: bool = false  # ป้องกัน double-click
 
 func _ready() -> void:
 	print("Main: _ready() started")
@@ -262,6 +263,12 @@ func _show_placement_preview(mouse_pos: Vector2) -> void:
 
 ## วางพืชที่ตำแหน่ง mouse
 func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
+	# ป้องกัน double-click
+	if is_placing_plant:
+		return
+
+	is_placing_plant = true
+
 	# แปลง screen mouse position -> board local position
 	# mouse_pos จาก event.position เป็น viewport position
 	# ต้องแปลงเป็น global position ก่อน แล้วค่อยแปลงเป็น local ของ board
@@ -272,25 +279,33 @@ func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 	print("Mouse: %s -> Board local: %s -> Grid: %s" % [mouse_pos, board_local_pos, grid_pos])
 
 	if not board.is_position_valid(grid_pos):
+		is_placing_plant = false
 		return
 
 	if not board.is_position_empty(grid_pos):
+		is_placing_plant = false
 		return
 
 	# ดึงพืชจาก hand
 	var plant = season_manager.get_next_plant_to_place()
 	if not plant:
 		push_warning("No plant available in hand to place")
+		is_placing_plant = false
 		return
 
 	print("Placing plant: %s" % plant.plant_name)
 
 	# วางพืช
-	board.place_plant(plant, grid_pos)
+	var success = board.place_plant(plant, grid_pos)
 
-	# อัพเดท hand state
-	season_manager.advance_plant_index()
-	season_manager.place_plant_in_hand()
+	if success:
+		# อัพเดท hand state
+		season_manager.advance_plant_index()
+		season_manager.place_plant_in_hand()
 
-	# อัพเดท HUD
-	hud.update_hand_info()
+		# อัพเดท HUD
+		hud.update_hand_info()
+	else:
+		push_error("Failed to place plant: %s" % plant.plant_name)
+
+	is_placing_plant = false
