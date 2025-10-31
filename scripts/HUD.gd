@@ -23,6 +23,7 @@ var coins_label: Label
 var entropy_bar: ProgressBar
 var entropy_label: Label
 var status_label: Label  # แสดงสถานะเกม
+var hand_info_label: Label  # แสดงข้อมูล hand ปัจจุบัน
 
 var overgrow_button: Button
 var stabilize_button: Button
@@ -79,6 +80,13 @@ func _setup_ui() -> void:
 	status_label.add_theme_font_size_override("font_size", 24)
 	status_label.add_theme_color_override("font_color", Color.YELLOW)
 	vbox.add_child(status_label)
+
+	# === Hand Info Label ===
+	hand_info_label = Label.new()
+	hand_info_label.text = "Hand: - | Next: -"
+	hand_info_label.add_theme_font_size_override("font_size", 18)
+	hand_info_label.add_theme_color_override("font_color", Color.CYAN)
+	vbox.add_child(hand_info_label)
 
 	# === Entropy Bar ===
 	var entropy_panel = VBoxContainer.new()
@@ -207,6 +215,17 @@ func update_status(message: String, color: Color = Color.WHITE) -> void:
 		status_label.text = message
 		status_label.add_theme_color_override("font_color", color)
 		print("HUD: Status updated - %s" % message)
+
+## อัพเดทข้อมูล hand
+func update_hand_info() -> void:
+	if not hand_info_label or not season_manager:
+		return
+
+	var remaining = season_manager.get_plants_remaining_in_hand()
+	var next_plant = season_manager.get_next_plant_name()
+	var hand_num = season_manager.current_hand
+
+	hand_info_label.text = "Hand %d | Remaining: %d | Next: %s" % [hand_num, remaining, next_plant]
 
 ## Overgrow pressed
 func _on_overgrow_pressed() -> void:

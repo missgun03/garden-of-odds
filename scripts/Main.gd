@@ -161,9 +161,11 @@ func _on_season_state_changed(new_state: SeasonManager.SeasonState) -> void:
 		SeasonManager.SeasonState.HAND_1_DRAFTING, SeasonManager.SeasonState.HAND_2_DRAFTING:
 			_start_drafting(new_state)
 		SeasonManager.SeasonState.HAND_1_PLACING:
-			hud.update_status("HAND 1: Click to place plants (3 remaining)", Color.GREEN)
+			hud.update_status("HAND 1: Click to place plants", Color.GREEN)
+			hud.update_hand_info()
 		SeasonManager.SeasonState.HAND_2_PLACING:
-			hud.update_status("HAND 2: Click to place plants (3 remaining)", Color.GREEN)
+			hud.update_status("HAND 2: Click to place plants", Color.GREEN)
+			hud.update_hand_info()
 		SeasonManager.SeasonState.MINI_BLOOM:
 			hud.update_status("MINI BLOOM...", Color.CYAN)
 		SeasonManager.SeasonState.FULL_BLOOM:
@@ -258,7 +260,7 @@ func _show_placement_preview(mouse_pos: Vector2) -> void:
 		if board.is_position_empty(grid_pos):
 			board.show_placeholder(grid_pos, true)
 
-## วางพืชที่ตำแหน่ง mouse (สำหรับ testing)
+## วางพืชที่ตำแหน่ง mouse
 func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 	# แปลง screen mouse position -> board local position
 	# mouse_pos จาก event.position เป็น viewport position
@@ -275,11 +277,20 @@ func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 	if not board.is_position_empty(grid_pos):
 		return
 
-	# สร้างพืชจาก PlantFactory (ตอนนี้ hardcode เป็น Sunbud)
-	var plant = plant_factory.create_plant_by_name("Sunbud")
+	# ดึงพืชจาก hand
+	var plant = season_manager.get_next_plant_to_place()
 	if not plant:
-		push_error("Failed to create plant")
+		push_warning("No plant available in hand to place")
 		return
+
+	print("Placing plant: %s" % plant.plant_name)
 
 	# วางพืช
 	board.place_plant(plant, grid_pos)
+
+	# อัพเดท hand state
+	season_manager.advance_plant_index()
+	season_manager.place_plant_in_hand()
+
+	# อัพเดท HUD
+	hud.update_hand_info()
