@@ -306,6 +306,6 @@ func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 		# อัพเดท HUD
 		hud.update_hand_info()
 	else:
-		push_error("Failed to place plant: %s" % plant.plant_name)
+		push_warning("Failed to place plant: %s" % plant.plant_name)
 
 	is_placing_plant = false

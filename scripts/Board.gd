@@ -79,16 +79,16 @@ func is_position_empty(pos: Vector2i) -> bool:
 ## Returns: true ถ้าวางสำเร็จ, false ถ้าตำแหน่งไม่ถูกต้องหรือมีพืชอยู่แล้ว
 func place_plant(plant: Plant, pos: Vector2i) -> bool:
 	if not is_position_valid(pos):
-		push_error("Board.place_plant: Invalid position %s" % pos)
+		push_warning("Board.place_plant: Invalid position %s" % pos)
 		return false
 
 	if grid.has(pos):
-		push_error("Board.place_plant: Position %s already occupied" % pos)
+		push_warning("Board.place_plant: Position %s already occupied" % pos)
 		return false
 
 	# ตรวจสอบว่าพืชมี parent อยู่แล้วหรือไม่
 	if plant.get_parent() != null:
-		push_error("Board.place_plant: Plant %s already has a parent (already placed)" % plant.plant_name)
+		push_warning("Board.place_plant: Plant %s already has a parent (already placed)" % plant.plant_name)
 		return false
 
 	# วางพืช
