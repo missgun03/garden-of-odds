@@ -10,6 +10,11 @@ class_name Main
 @onready var season_manager: SeasonManager = $SeasonManager
 @onready var resolver: Resolver = $Resolver
 
+# Data loading system (created in _ready)
+var data_loader: DataLoader = null
+var l_rule_evaluator: LRuleEvaluator = null
+var plant_factory: PlantFactory = null
+
 # Game state
 var current_season: int = 1
 var stages_data: Dictionary = {}
@@ -17,6 +22,9 @@ var selected_plant_to_place: Dictionary = {}
 
 func _ready() -> void:
 	print("Main: _ready() started")
+
+	# สร้าง data loading system
+	_setup_data_loading_system()
 
 	# โหลด stages data
 	_load_stages_data()
@@ -31,6 +39,27 @@ func _ready() -> void:
 
 	# เริ่มเกม
 	_start_game()
+
+## สร้างและตั้งค่า data loading system
+func _setup_data_loading_system() -> void:
+	print("Main: Setting up data loading system...")
+
+	# สร้าง DataLoader
+	data_loader = DataLoader.new()
+	add_child(data_loader)
+	data_loader.load_all_data()
+
+	# สร้าง LRuleEvaluator
+	l_rule_evaluator = LRuleEvaluator.new()
+	add_child(l_rule_evaluator)
+
+	# สร้าง PlantFactory
+	plant_factory = PlantFactory.new()
+	plant_factory.data_loader = data_loader
+	plant_factory.l_rule_evaluator = l_rule_evaluator
+	add_child(plant_factory)
+
+	print("Main: Data loading system ready")
 
 ## โหลด stages data จาก JSON
 func _load_stages_data() -> void:
@@ -64,6 +93,7 @@ func _connect_references() -> void:
 	season_manager.board = board
 	season_manager.resolver = resolver
 	season_manager.hud = hud
+	season_manager.plant_factory = plant_factory
 
 	hud.season_manager = season_manager
 	hud.resolver = resolver
@@ -245,18 +275,11 @@ func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:
 	if not board.is_position_empty(grid_pos):
 		return
 
-	# สร้างพืช (ตอนนี้ hardcode เป็น Sunbud)
-	var plant = Plant.new()
-	plant.plant_id = 0
-	plant.plant_name = "Sunbud"
-	plant.role = "Energy"
-	plant.p_base = 5
-	plant.l_min = 1.0
-	plant.l_max = 2.2
-	plant.entropy_on_event = 0.3
-	# สร้าง typed array สำหรับ tags
-	var plant_tags: Array[String] = ["light", "buff", "engine"]
-	plant.tags = plant_tags
+	# สร้างพืชจาก PlantFactory (ตอนนี้ hardcode เป็น Sunbud)
+	var plant = plant_factory.create_plant_by_name("Sunbud")
+	if not plant:
+		push_error("Failed to create plant")
+		return
 
 	# วางพืช
 	board.place_plant(plant, grid_pos)

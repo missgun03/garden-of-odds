@@ -44,6 +44,7 @@ var current_entropy: float = 0.0
 var board: Board = null
 var resolver: Resolver = null
 var hud: Node = null
+var plant_factory: PlantFactory = null
 
 # Bloom timer
 var bloom_timer: float = 0.0
@@ -73,15 +74,32 @@ func start_season(season_config: Dictionary) -> void:
 ## สุ่ม draft stacks (3 กอง, กองละ 3 ใบ)
 func _generate_draft_stacks() -> void:
 	available_stacks = []
-	for i in range(3):
-		var stack = []
-		for j in range(3):
-			# TODO: สุ่มพืชจาก plant pool (ตอนนี้ hardcode)
-			stack.append({
-				"plant_name": "Sunbud",
-				"plant_id": i * 3 + j
-			})
-		available_stacks.append(stack)
+
+	if not plant_factory or not plant_factory.data_loader or not plant_factory.data_loader.is_loaded:
+		push_warning("SeasonManager: PlantFactory not ready, using fallback")
+		# Fallback: hardcode
+		for i in range(3):
+			var stack = []
+			for j in range(3):
+				stack.append({"plant_name": "Sunbud", "plant_id": i * 3 + j})
+			available_stacks.append(stack)
+	else:
+		# ใช้ PlantFactory สุ่มพืช
+		var all_plant_names = plant_factory.data_loader.get_all_plant_names()
+		if all_plant_names.is_empty():
+			push_error("SeasonManager: No plants available")
+			return
+
+		for i in range(3):
+			var stack = []
+			for j in range(3):
+				# สุ่มพืช
+				var random_name = all_plant_names[randi() % all_plant_names.size()]
+				stack.append({
+					"plant_name": random_name,
+					"plant_id": i * 3 + j
+				})
+			available_stacks.append(stack)
 
 	print("SeasonManager: Generated %d draft stacks" % available_stacks.size())
 	emit_signal("draft_stack_ready", available_stacks)

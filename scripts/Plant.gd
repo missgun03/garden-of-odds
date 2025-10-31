@@ -25,8 +25,9 @@ var board: Node = null
 signal plant_triggered(event: Dictionary)
 
 func _ready() -> void:
-	# เพิ่ม visual placeholder
-	_setup_visual()
+	# เพิ่ม visual placeholder (เฉพาะถ้ายังไม่มี)
+	if get_child_count() == 0:
+		_setup_visual()
 
 ## Setup visual (สามารถ override ได้)
 func _setup_visual() -> void:
@@ -57,7 +58,14 @@ func _get_role_color() -> Color:
 
 ## คำนวณ L จาก context (override ในแต่ละพืชเพื่อใส่ logic เฉพาะ)
 ## ctx = {neighbors: Array[Plant], board_state: Dictionary, ...}
-func calculate_L(_ctx: Dictionary) -> float:
+func calculate_L(ctx: Dictionary) -> float:
+	# ถ้ามี LRuleEvaluator ให้ใช้มันในการคำนวณ
+	if has_meta("l_rule_evaluator") and has_meta("l_rule"):
+		var evaluator = get_meta("l_rule_evaluator")
+		var l_rule = get_meta("l_rule")
+		if evaluator and evaluator is LRuleEvaluator:
+			return evaluator.evaluate(ctx, self, l_rule, l_min)
+
 	# Base implementation: คืน l_min (override ในแต่ละพืชเพื่อใส่ logic)
 	return l_min
 
