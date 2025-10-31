@@ -63,15 +63,23 @@ func load_plants() -> Array:
 
 	file.close()
 	print("DataLoader: Loaded %d plants from CSV" % plants.size())
+
+	# Debug: แสดงรายชื่อพืชทั้งหมด
+	if plants.size() > 0:
+		print("DataLoader: Plant names loaded:")
+		for plant in plants:
+			print("  - %s" % plant.get("name", "???"))
+
 	return plants
 
 ## แปลง CSV line เป็น plant dictionary
 func _parse_plant_csv_line(line: String) -> Dictionary:
-	# Split by comma (simple CSV parser - doesn't handle quoted commas)
-	var parts = line.split(",")
+	# Parse CSV with proper quoted field handling
+	var parts = _split_csv_line(line)
 
 	if parts.size() < 9:
-		push_warning("DataLoader: Invalid plant CSV line (too few columns)")
+		push_warning("DataLoader: Invalid plant CSV line (expected 9 columns, got %d)" % parts.size())
+		push_warning("  Line: %s" % line)
 		return {}
 
 	# Parse fields
@@ -191,3 +199,31 @@ func get_all_plant_names() -> Array[String]:
 	for plant in plants_data:
 		names.append(plant.get("name", ""))
 	return names
+
+## Split CSV line รองรับ quoted fields
+func _split_csv_line(line: String) -> Array[String]:
+	var result: Array[String] = []
+	var current_field = ""
+	var in_quotes = false
+	var i = 0
+
+	while i < line.length():
+		var c = line[i]
+
+		if c == '"':
+			# Toggle quote mode
+			in_quotes = not in_quotes
+		elif c == ',' and not in_quotes:
+			# Comma outside quotes = field separator
+			result.append(current_field)
+			current_field = ""
+		else:
+			# Regular character
+			current_field += c
+
+		i += 1
+
+	# Add last field
+	result.append(current_field)
+
+	return result

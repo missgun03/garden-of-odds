@@ -136,14 +136,19 @@ func _create_hand_plants_from_stack() -> void:
 		return
 
 	# สร้างพืชจาก selected_stack
-	for plant_data in selected_stack:
+	print("SeasonManager: Creating plants from stack with %d entries" % selected_stack.size())
+	for i in range(selected_stack.size()):
+		var plant_data = selected_stack[i]
 		var plant_name = plant_data.get("plant_name", "Sunbud")
+		print("  [%d] Attempting to create: %s" % [i, plant_name])
 		var plant = plant_factory.create_plant_by_name(plant_name)
 		if plant:
 			current_hand_plants.append(plant)
-			print("SeasonManager: Created %s for hand" % plant_name)
+			print("  [%d] ✓ Created %s successfully" % [i, plant_name])
+		else:
+			push_warning("  [%d] ✗ Failed to create %s" % [i, plant_name])
 
-	print("SeasonManager: Hand ready with %d plants" % current_hand_plants.size())
+	print("SeasonManager: Hand ready with %d/%d plants" % [current_hand_plants.size(), selected_stack.size()])
 
 ## Reroll draft stacks (1 ครั้งต่อฤดู)
 func reroll_draft_stacks() -> void:
@@ -167,11 +172,14 @@ func start_hand(hand_number: int) -> void:
 
 ## ดึงพืชถัดไปที่จะวาง (ไม่ลบออกจาก hand)
 func get_next_plant_to_place() -> Plant:
+	print("SeasonManager: get_next_plant_to_place() - index: %d, total: %d" % [next_plant_index, current_hand_plants.size()])
+
 	if next_plant_index >= current_hand_plants.size():
-		push_warning("SeasonManager: No more plants in hand")
+		push_warning("SeasonManager: No more plants in hand (index %d >= size %d)" % [next_plant_index, current_hand_plants.size()])
 		return null
 
 	var plant = current_hand_plants[next_plant_index]
+	print("SeasonManager: Returning plant: %s" % (plant.plant_name if plant else "null"))
 	return plant
 
 ## เพิ่ม counter หลังวางพืชแล้ว
