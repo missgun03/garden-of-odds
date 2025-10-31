@@ -44,7 +44,8 @@ func _setup_grid_visuals() -> void:
 			var pos = Vector2i(x, y)
 			var rect = ColorRect.new()
 			rect.size = Vector2(cell_size - 2, cell_size - 2)
-			rect.position = _grid_to_world(pos)
+			# วาง rect ที่มุมบนซ้าย cell (ไม่ใช่ตรงกลาง)
+			rect.position = Vector2(x * cell_size + 1, y * cell_size + 1)
 			rect.color = Color(0.2, 0.2, 0.2, 0.5)
 			rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(rect)
