@@ -75,10 +75,10 @@ func evaluate(ctx: Dictionary, plant: Plant, l_rule: String, l_min: float) -> fl
 
 		# Pattern: "×X if ..." (other multiplier conditions)
 		elif rule.begins_with("×") or rule.begins_with("x"):
-			var value = _extract_multiplier_value(rule)
+			var _value = _extract_multiplier_value(rule)
 			# For now, just apply the multiplier (full condition checking requires more context)
 			# TODO: Implement specific condition checking
-			# multiplier *= value
+			# multiplier *= _value
 
 		# Pattern: "+X per ..." (generic additive)
 		elif "+0." in rule or "+1." in rule or "+2." in rule:
@@ -118,8 +118,8 @@ func _extract_plant_names(rule: String) -> Array[String]:
 	var results = regex.search_all(rule)
 
 	for result in results:
-		var name = result.get_string(1)
-		names.append(name)
+		var plant_name = result.get_string(1)
+		names.append(plant_name)
 
 	# Also check for "or PlantName" pattern
 	var or_regex = RegEx.new()
@@ -127,14 +127,14 @@ func _extract_plant_names(rule: String) -> Array[String]:
 	var or_results = or_regex.search_all(rule)
 
 	for result in or_results:
-		var name = result.get_string(1)
-		if not names.has(name):
-			names.append(name)
+		var plant_name = result.get_string(1)
+		if not names.has(plant_name):
+			names.append(plant_name)
 
 	return names
 
 ## นับจำนวน empty orthogonal cells รอบพืช
-func _count_empty_orthogonal_cells(ctx: Dictionary, plant: Plant) -> int:
+func _count_empty_orthogonal_cells(_ctx: Dictionary, plant: Plant) -> int:
 	if not plant.board:
 		return 0
 
@@ -156,7 +156,7 @@ func _count_empty_orthogonal_cells(ctx: Dictionary, plant: Plant) -> int:
 	return empty_count
 
 ## ตรวจสอบว่าพืชอยู่ในตำแหน่งที่ "unblocked" (ไม่มีพืชด้านบน)
-func _is_unblocked(ctx: Dictionary, plant: Plant) -> bool:
+func _is_unblocked(_ctx: Dictionary, plant: Plant) -> bool:
 	if not plant.board:
 		return false
 
