@@ -223,9 +223,10 @@ func _show_placement_preview(mouse_pos: Vector2) -> void:
 		for y in range(board.grid_size):
 			board.show_placeholder(Vector2i(x, y), false)
 
-	# แสดง placeholder ใหม่
-	if board.is_position_valid(grid_pos) and board.is_position_empty(grid_pos):
-		board.show_placeholder(grid_pos, true)
+	# แสดง placeholder ใหม่ **เฉพาะ** ถ้า valid และว่าง
+	if board.is_position_valid(grid_pos):
+		if board.is_position_empty(grid_pos):
+			board.show_placeholder(grid_pos, true)
 
 ## วางพืชที่ตำแหน่ง mouse (สำหรับ testing)
 func _try_place_plant_at_mouse(mouse_pos: Vector2) -> void:

@@ -21,13 +21,22 @@ func _ready() -> void:
 
 ## สร้าง visual grid
 func _setup_grid_visuals() -> void:
-	# สร้าง border รอบกระดาน
+	# สร้าง border รอบกระดาน (พอดีกับ grid)
 	var border = ColorRect.new()
-	border.size = Vector2(grid_size * cell_size + 4, grid_size * cell_size + 4)
-	border.position = Vector2(-2, -2)
-	border.color = Color(0.8, 0.8, 0.8, 0.5)
+	var border_thickness = 3.0
+	border.size = Vector2(grid_size * cell_size + border_thickness * 2, grid_size * cell_size + border_thickness * 2)
+	border.position = Vector2(-border_thickness, -border_thickness)
+	border.color = Color(1.0, 1.0, 1.0, 0.8)  # สีขาวชัดขึ้น
 	border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(border)
+
+	# สร้าง background ดำข้างใน
+	var bg = ColorRect.new()
+	bg.size = Vector2(grid_size * cell_size, grid_size * cell_size)
+	bg.position = Vector2(0, 0)
+	bg.color = Color(0.1, 0.1, 0.1, 0.8)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(bg)
 
 	# สร้าง grid cells
 	for x in range(grid_size):
@@ -36,7 +45,7 @@ func _setup_grid_visuals() -> void:
 			var rect = ColorRect.new()
 			rect.size = Vector2(cell_size - 2, cell_size - 2)
 			rect.position = _grid_to_world(pos)
-			rect.color = Color(0.2, 0.2, 0.2, 0.3)
+			rect.color = Color(0.2, 0.2, 0.2, 0.5)
 			rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(rect)
 			placeholders[pos] = rect
