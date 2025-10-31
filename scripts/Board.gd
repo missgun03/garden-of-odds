@@ -21,6 +21,15 @@ func _ready() -> void:
 
 ## สร้าง visual grid
 func _setup_grid_visuals() -> void:
+	# สร้าง border รอบกระดาน
+	var border = ColorRect.new()
+	border.size = Vector2(grid_size * cell_size + 4, grid_size * cell_size + 4)
+	border.position = Vector2(-2, -2)
+	border.color = Color(0.8, 0.8, 0.8, 0.5)
+	border.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(border)
+
+	# สร้าง grid cells
 	for x in range(grid_size):
 		for y in range(grid_size):
 			var pos = Vector2i(x, y)
@@ -43,8 +52,9 @@ func _grid_to_world(grid_pos: Vector2i) -> Vector2:
 func _world_to_grid(world_pos: Vector2) -> Vector2i:
 	# world position เป็น local position ของ board (relative to board origin)
 	# แปลงเป็น grid index โดยหารด้วย cell_size
-	var grid_x = int(world_pos.x / cell_size)
-	var grid_y = int(world_pos.y / cell_size)
+	# ใช้ floor() เพื่อให้ค่าติดลบยังคงเป็นลบ (ไม่ปัดเป็น 0)
+	var grid_x = int(floor(world_pos.x / cell_size))
+	var grid_y = int(floor(world_pos.y / cell_size))
 	return Vector2i(grid_x, grid_y)
 
 ## ตรวจสอบว่าตำแหน่งถูกต้องหรือไม่
